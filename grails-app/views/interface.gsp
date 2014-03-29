@@ -14,11 +14,9 @@
     var eventBus = new vertx.EventBus("http://localhost:5439/eventbus");
     eventBus.onopen = function () {
         console.info("EventBus ready...");
-        eventBus.send('move-ball', {
+        eventBus.publish('move-ball', {
             direcition: 'right',
             px: 0.15
-        }, function (resp) {
-            console.info(resp);
         });
     }
     eventBus.onclose = function () {
