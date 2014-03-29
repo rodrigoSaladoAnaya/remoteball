@@ -1,3 +1,3 @@
-// Place your Spring DSL code here
 beans = {
+    platformManager(org.vertx.java.platform.PlatformLocator)
 }
