@@ -25,10 +25,10 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    var cuerpo_shape = new THREE.TorusGeometry(70, 10, 20, 50);
+    var cuerpo_shape = new THREE.CubeGeometry(150, 220, 220);
     var cuerpo_cover = new THREE.MeshNormalMaterial();
     var cuerpo = new THREE.Mesh(cuerpo_shape, cuerpo_cover);
-    cuerpo.rotation.set(1.5, 0, 0);
+    cuerpo.rotation.y = 0.3;
     scene.add(cuerpo);
 
     renderer.render(scene, camera);
