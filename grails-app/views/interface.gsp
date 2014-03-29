@@ -4,9 +4,28 @@
     <title>Welcome to Grails</title>
 </head>
 
-<body />
+<body/>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'three.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'sockjs.min.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'vertxbus.js')}"></script>
+
 <script>
+    /** Vertx */
+    var eventBus = new vertx.EventBus("http://localhost:5439/eventbus");
+    eventBus.onopen = function () {
+        console.info("EventBus ready...");
+        eventBus.send('move-ball', {
+            direcition: 'right',
+            px: 0.15
+        }, function (resp) {
+            console.info(resp);
+        });
+    }
+    eventBus.onclose = function () {
+        eventBus = null;
+        console.error("EventBus down...");
+    }
+    /** Donut */
     if (window.innerWidth === 0) {
         window.innerWidth = parent.innerWidth;
         window.innerHeight = parent.innerHeight;
