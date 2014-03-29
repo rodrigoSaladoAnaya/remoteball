@@ -10,19 +10,6 @@
 <script type="text/javascript" src="${resource(dir: 'js', file: 'vertxbus.js')}"></script>
 
 <script>
-    /** Vertx */
-    var eventBus = new vertx.EventBus("http://localhost:5439/eventbus");
-    eventBus.onopen = function () {
-        console.info("EventBus ready...");
-        eventBus.publish('move-ball', {
-            direcition: 'right',
-            px: 0.15
-        });
-    }
-    eventBus.onclose = function () {
-        eventBus = null;
-        console.error("EventBus down...");
-    }
     /** Donut */
     if (window.innerWidth === 0) {
         window.innerWidth = parent.innerWidth;
@@ -46,22 +33,36 @@
 
     renderer.render(scene, camera);
 
-    document.addEventListener('keydown', function (event) {
-        var code = event.keyCode;
-        var pow = 0.15;
-        if (code == 37) { // izq
-            cuerpo.rotation.y -= pow;
-        }
-        if (code == 38) { // ari
-            cuerpo.rotation.x -= pow;
-        }
-        if (code == 39) { // der
-            cuerpo.rotation.y += pow;
-        }
-        if (code == 40) { // abj
-            cuerpo.rotation.x += pow;
-        }
-        renderer.render(scene, camera);
-    });
+    /** Vertx */
+    var eventBus = new vertx.EventBus("http://localhost:5439/eventbus");
+    eventBus.onopen = function () {
+        console.info("EventBus ready...");
+        document.addEventListener('keydown', function (event) {
+            var code = event.keyCode;
+            var pow = 0.15;
+            if (code == 37) { // left
+                cuerpo.rotation.y -= pow;
+            }
+            if (code == 38) { // up
+                cuerpo.rotation.x -= pow;
+            }
+            if (code == 39) { // right
+                cuerpo.rotation.y += pow;
+            }
+            if (code == 40) { // down
+                cuerpo.rotation.x += pow;
+            }
+            eventBus.publish('move-ball', {
+                code: code,
+                px: pow
+            });
+
+            renderer.render(scene, camera);
+        });
+    }
+    eventBus.onclose = function () {
+        eventBus = null;
+        console.error("EventBus down...");
+    }
 </script>
 </html>
