@@ -37,6 +37,10 @@ class VertxUtilsService {
         eventBus.registerHandler(address, messageHandler, resultHandler);
     }
 
+    void publish(String address, args) {
+        eventBus.publish(address, args)
+    }
+
     void send(String address, args, bodyHandler) {
         def messageHandler = new Handler<Message<JsonObject>>() {
             @Override
