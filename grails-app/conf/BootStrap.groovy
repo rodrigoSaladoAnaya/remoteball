@@ -19,5 +19,7 @@ class BootStrap {
         eventBusBridgeService.start()
         moveBallService.moveBallToRight()
         moveBallService.moveBallToLeft()
+        moveBallService.moveBallToUp()
+        moveBallService.moveBallToDown()
     }
 }

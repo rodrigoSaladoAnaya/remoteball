@@ -12,7 +12,6 @@ class MoveBallService {
                 vertxUtilsService.publish('apply-move-to-right', [
                         px: body.px
                 ] as JsonObject)
-                log.info "move to right ${body.px} px"
             }
         })
     }
@@ -24,7 +23,28 @@ class MoveBallService {
                 vertxUtilsService.publish('apply-move-to-left', [
                         px: body.px
                 ] as JsonObject)
-                log.info "move to left ${body.px} px"
+            }
+        })
+    }
+
+    def moveBallToUp() {
+        vertxUtilsService.registerHandler('move-ball', { msg ->
+            def body = msg.body().toMap()
+            if (body.code == 38) {
+                vertxUtilsService.publish('apply-move-to-up', [
+                        px: body.px
+                ] as JsonObject)
+            }
+        })
+    }
+
+    def moveBallToDown() {
+        vertxUtilsService.registerHandler('move-ball', { msg ->
+            def body = msg.body().toMap()
+            if (body.code == 40) {
+                vertxUtilsService.publish('apply-move-to-down', [
+                        px: body.px
+                ] as JsonObject)
             }
         })
     }

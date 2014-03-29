@@ -55,6 +55,16 @@
             cuerpo.rotation.y -= msg.px;
             renderer.render(scene, camera);
         });
+
+        eventBus.registerHandler('apply-move-to-up', function (msg) {
+            cuerpo.rotation.x -= msg.px;
+            renderer.render(scene, camera);
+        });
+
+        eventBus.registerHandler('apply-move-to-down', function (msg) {
+            cuerpo.rotation.x += msg.px;
+            renderer.render(scene, camera);
+        });
     }
 
     eventBus.onclose = function () {
